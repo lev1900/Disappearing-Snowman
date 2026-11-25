@@ -1,8 +1,25 @@
 var snowmanParts = [".hat", ".face", ".scarf", ".hands", ".body-top", ".body-middle", ".body-bottom"];
 
-var randomWord = getRandomWord(words);
+var randomWord = getRandomWord('words');
 
 var keyboardContainer = document.querySelector('#keyboard-container');
+
+function checkForLoser() {
+    if (snowmanParts.length === 0) {
+        var snowmanContainer = document.querySelector("#snowman-container");
+        snowmanContainer.innerHTML = "<h2>You Lost, game over!</h2>";
+        var keyboardContainer = document.querySelector("#keyboard-container");
+        keyboardContainer.innerHTML="<h2>The word was: " + randomWord + "</h2>";
+    }
+}
+
+function checkForWinner(){
+    var hiddenLetterElements = document.querySelectorAll(".hidden");
+    if (hiddenLetterElements.length === 0) {
+        var keyboardContainer = document.querySelector("#keyboard-container");
+        keyboardContainer.innerHTML="<h2>You Win!</h2>";
+    }
+}
 
 keyboardContainer.addEventListener("click",handleKeyboardClick);
 generateHiddenWord(randomWord);
@@ -15,9 +32,10 @@ var clickedLetter = clickedElement.textContent;
 var hasMatch = checkForMatch(clickedLetter);
 if (!hasMatch) {
 // What function do we call??
-checkForLoser();
+checkForWinner();
 } else {
 // What function do we call??
+checkForLoser();
 }
 }
 function checkForMatch(clickedLetter) {
@@ -26,7 +44,7 @@ document.querySelectorAll(".hidden");
 var hasMatch = false;
 hiddenLetterElements.forEach(hiddenLetterElement => {
 var hiddenLetter = hiddenLetterElement.textContent;
-console.log(hiddenLetter, clickedLetter)
+//console.log(hiddenLetter, clickedLetter)
 if (hiddenLetter === clickedLetter) {
 hiddenLetterElement.classList.remove("hidden");
 
@@ -57,7 +75,9 @@ lettersHTML += letterHTML;
 emptyLetterContainer.innerHTML = lettersHTML;
 }
 function getRandomWord(words) {
+var words=["snowman", "snowflake", "gingerbread", "reindeer", "santa", "elf", "stockings", "presents", "cookies"];
 var randomIndex = Math.floor(Math.random() * words.length);
 var randomWord = words[randomIndex];
 return randomWord;
 }
+console.log(getRandomWord());
